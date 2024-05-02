@@ -42,18 +42,35 @@ public class ControllelEmpleados {
     }
 
     @PutMapping("/empleado/{id}")
-    public ResponseEntity<?> put(@PathVariable String id, @RequestBody Object input) {
-        return null;
+    public ResponseEntity<?> put(@PathVariable Long id, @RequestBody Empleado empleadodetails) {
+           Optional<Empleado> optionalPersona = repositoryEmpleado.findById(id);
+        if (optionalPersona.isPresent()) {
+            Empleado emp = optionalPersona.get();
+            emp.setNombre(empleadodetails.getNombre());
+            emp.setDireccion(empleadodetails.getDireccion());
+            emp.setTelefono(empleadodetails.getTelefono());
+            repositoryEmpleado.save(emp);
+            return ResponseEntity.ok(emp);
+        } else {
+            return null;
+        }
     }
 
     @PostMapping("/empleado/")
-    public ResponseEntity<?> post(@RequestBody Object input) {
-        return null;
+    public ResponseEntity<?> post(@RequestBody Empleado empleado) {
+        repositoryEmpleado.save(empleado);
+        return ResponseEntity.ok(empleado);
     }
 
     @DeleteMapping("/empleado/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id) {
-        return null;
+    public ResponseEntity<?> delete(@PathVariable Long id) {
+         Optional<Empleado> resEmpleado = repositoryEmpleado.findById(id);
+        if (resEmpleado.isPresent()) {
+            repositoryEmpleado.deleteById(id);
+            return ResponseEntity.ok().build();
+        } else {
+            return null;
+        }
     }
 
 }

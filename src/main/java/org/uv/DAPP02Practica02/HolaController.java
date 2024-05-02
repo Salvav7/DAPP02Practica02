@@ -23,6 +23,6 @@ public class HolaController {
 
     @GetMapping("/2/")
     public String holamundo2() {
-        return "Hola mundo dos ...";
+        return "Hola mundo dos .";
     }
 }
